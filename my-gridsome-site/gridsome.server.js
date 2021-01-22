@@ -14,3 +14,18 @@ module.exports = function (api) {
     // Use the Pages API here: https://gridsome.org/docs/pages-api/
   })
 }
+
+const nodeExternals = require('webpack-node-externals')
+
+module.exports = function (api) {
+  api.chainWebpack((config, { isServer }) => {
+    if (isServer) {
+      config.externals([
+        nodeExternals({
+          allowlist: [/^vuetify/]
+        })
+      ])
+    }
+  })
+
+  api.loadSource(store => {
